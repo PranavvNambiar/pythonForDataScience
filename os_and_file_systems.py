@@ -74,7 +74,8 @@ with open("./data/loans3.txt", "r") as file3:
 
     print(files3_lines[0])
     # To remove the '\n' character after every line, we can use the strip() function
-    # The strip function removes any extra spaces and newline characters \n
+    # The strip function removes any extra spaces in the beggining and the end of the string
+    # and newline characters \n
     print(files3_lines[0].strip())
 
 print("\n" * 2)

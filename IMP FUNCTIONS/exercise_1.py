@@ -1,12 +1,14 @@
 # Data Analysis for Vacation Planning
+# This code can calculate the cost of trip for vacation when many places exist with different budgets and can
+# help calculate the cheapest and the days we can spend the most in the decided city.
 import math
 
 
 def cost_of_trip(cities, budget=0, duration=0):
     """
-    cities - we have data of few different cities for which you can do calculations
-     Budget - What's your budget?
-     Duration - For how long you wanna have fun !(in no. of days
+    Cities - we have data of few different cities for which you can do calculations
+    Budget - What's your budget?
+    Duration - For how long you wanna have fun !(in no. of days)
     """
     total_cost = [0] * len(cities)
     i = 0
