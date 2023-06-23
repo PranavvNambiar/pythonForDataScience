@@ -29,7 +29,7 @@ def read_csv(path):
         headers = parse_headers(lines[0])
         values = []
         for line in lines[1:]:
-            values2 = parse_values(line)
-            item_dict = create_item_dict(values2, headers)
+            values = parse_values(line)
+            item_dict = create_item_dict(values, headers)
             result.append(item_dict)
     return result
