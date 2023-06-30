@@ -1,4 +1,5 @@
 import pandas as pd
+from urllib.request import urlretrieve as url
 
 covid_df = pd.read_csv("./Pandas/italy-covid-daywise.csv")
 print(covid_df)
@@ -31,7 +32,7 @@ print(total_tests)
 positive_rate = total_cases / total_tests
 print("The overall positivity rate is {:.2f}%".format(positive_rate * 100))
 
-#!Querying and Sorting Rows
+# ?Querying and Sorting Rows
 high_new_cases = covid_df.new_cases > 1000
 print(high_new_cases)
 
@@ -61,7 +62,7 @@ covid_df.drop(columns=["positive_rate"], inplace=True)
 
 print(covid_df)
 
-#! Querying and Sorting Rows
+# ? Querying and Sorting Rows
 # Will give us the first 10 values in descending order of new_cases (from most cases to least cases)
 print(covid_df.sort_values("new_cases", ascending=False).head(10))
 print(covid_df.sort_values("new_deaths", ascending=False).head(10))
@@ -83,7 +84,7 @@ covid_df.at[172, "new_cases"] = (
 print(covid_df.at[172, "new_cases"])
 print(covid_df.loc[165:175])
 
-#! Working with dates
+# ? Working with dates
 print(covid_df.date)
 # This datatype is currently an object, so Pandas does not know that this column is a date. We can convert it into a 'datetime' colummn.
 # This can be done with the the pandas function, to_datetime() and by passing the series as a parameter
@@ -122,3 +123,87 @@ print(covid_df.new_cases.mean())
 
 # Average for Sundays
 print(covid_df[covid_df.weekday == 6].new_cases.mean())
+
+# ?Grouping and Aggregation
+monthly_groups = covid_df.groupby("month")
+# This by itself will not help us that much and aggregtion will not be performed yet.
+print(monthly_groups[["new_cases", "new_deaths", "new_tests"]])
+# Aggregated Data as per monthly basis
+print(monthly_groups[["new_cases", "new_deaths", "new_tests"]].sum())
+
+# Can be done in one line by:-
+covid_month_df = covid_df.groupby("month")[
+    ["new_cases", "new_deaths", "new_tests"]
+].sum()
+
+print(covid_df.groupby("weekday")[["new_cases", "new_deaths", "new_tests"]].mean())
+# Aggregation can be done in many ways, it can be done by counts, mean, sum, etc
+
+# Apart from grouping, another form of aggregation to calculate the running or cummulative sum of cases, test, death up to the current date for each row. This can be done by using 'cumsum' method
+covid_df["total_cases"] = covid_df.new_cases.cumsum()
+covid_df["total_deaths"] = covid_df.new_deaths.cumsum()
+covid_df["total_tests"] = covid_df.new_tests.cumsum() + initial_tests
+# We add initial test as in the start some data was not added.
+
+# We will notice that the 'NaN' and 'total_tests' columns dont change
+# If we add with a 'NaN' value, the cummulative result will also be NaN
+
+
+# ^This is to display the whole table in the terminal
+# with pd.option_context(
+#     "display.max_rows",
+#     None,
+#     "display.max_columns",
+#     None,
+#     "display.precision",
+#     3,
+# ):
+#     print(covid_df)
+print(covid_df)
+
+# ?Merging data from multiple sources
+url(
+    "https://gist.githubusercontent.com/aakashns/8684589ef4f266116cdce023377fc9c8/raw/99ce3826b2a9d1e6d0bde7e9e559fc8b6e9ac88b/locations.csv",
+    "./Pandas/locations.csv",
+)
+
+locations_df = pd.read_csv("./Pandas/locations.csv")
+print(locations_df)
+print(locations_df[locations_df.location == "Italy"])
+
+covid_df["location"] = "Italy"
+print(covid_df)
+
+#! To merge data of 2 sources like CSV's we need to have ATLEAST ONE COMMON column between them
+# In this case, the common column is 'location'
+
+# ^In this we, we want to get information out from locations dataframe and we want to get the information out using the location column.
+merged_df = covid_df.merge(locations_df, on="location")
+print(merged_df)
+
+merged_df["cases_per_million"] = merged_df.total_cases * 1e6 / merged_df.population
+merged_df["deaths_per_million"] = merged_df.total_deaths * 1e6 / merged_df.population
+merged_df["tests_per_million"] = merged_df.total_tests * 1e6 / merged_df.population
+
+print(merged_df)
+
+# Saving all the useful columns of data into a csv file
+result_df = merged_df[
+    [
+        "date",
+        "new_cases",
+        "total_cases",
+        "new_deaths",
+        "total_deaths",
+        "new_tests",
+        "total_tests",
+        "cases_per_million",
+        "deaths_per_million",
+        "tests_per_million",
+    ]
+]
+result_df.to_csv("./Pandas/results.csv", index=None)
+# Using the to_csv function to save the dataframe locally, im saving it in the Pandas folder.
+# If the file already exists, this overwrites the file.
+# The to_csv function already includes an additional column for storing the index of the dataframe by default.
+# So instead of creating a redundant index column, we can set its value to None or False, like so index=None / index=False
