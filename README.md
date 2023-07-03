@@ -6,8 +6,6 @@ Welcome to the Python for Data Science repository! Here you will find a collecti
 
 - [Introduction](#introduction)
 - [Libraries](#libraries)
-- [Tutorials](#tutorials)
-- [Projects](#projects)
 - [Resources](#resources)
 - [Contributing](#contributing)
 - [License](#license)
@@ -41,41 +39,6 @@ Matplotlib is a plotting library that provides a wide variety of static, animate
 Seaborn is a Python data visualization library based on Matplotlib. It provides a high-level interface for creating beautiful and informative statistical graphics.
 
 [Seaborn Official Website](https://seaborn.pydata.org/)
-
-### Scikit-learn
-
-Scikit-learn is a powerful machine learning library in Python. It offers various algorithms for classification, regression, clustering, and dimensionality reduction, along with utilities for model evaluation and data preprocessing.
-
-[Scikit-learn Official Website](https://scikit-learn.org/)
-
-### TensorFlow
-
-TensorFlow is an open-source library for machine learning and deep learning. It provides a flexible platform to build and deploy machine learning models efficiently.
-
-[TensorFlow Official Website](https://www.tensorflow.org/)
-
-### Keras
-
-Keras is a high-level neural networks API, written in Python and compatible with TensorFlow. It allows for fast experimentation and prototyping of deep learning models.
-
-[Keras Official Website](https://keras.io/)
-
-## Tutorials
-
-- [Python for Data Science: A Comprehensive Guide](tutorials/comprehensive_guide.md)
-- [Exploratory Data Analysis with Pandas](tutorials/eda_with_pandas.md)
-- [Data Visualization with Matplotlib and Seaborn](tutorials/data_visualization.md)
-- [Introduction to Machine Learning with Scikit-learn](tutorials/intro_to_ml.md)
-- [Deep Learning with TensorFlow and Keras](tutorials/deep_learning.md)
-
-## Projects
-
-Explore the practical side of data science by working on these hands-on projects:
-
-- [Predictive Analytics: Housing Prices](projects/housing_prices.md)
-- [Customer Segmentation: Market Analysis](projects/customer_segmentation.md)
-- [Image Classification: Fashion MNIST](projects/fashion_mnist.md)
-- [Sentiment Analysis: Twitter Sentiment](projects/sentiment_analysis.md)
 
 ## Resources
 
